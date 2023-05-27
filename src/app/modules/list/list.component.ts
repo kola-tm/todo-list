@@ -1,7 +1,6 @@
 import { Component, OnInit, Signal, inject } from '@angular/core';
 import { Todo } from 'src/app/models/todo.model';
 import { TodosService } from './todos.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'todo-list',
@@ -11,8 +10,8 @@ import { Observable } from 'rxjs';
 export class ListComponent implements OnInit {
   
   todoService = inject(TodosService);
-  todos$: Observable<Todo[]> = this.todoService.todos$;
-  todoSignal: Signal<Todo[]> = this.todoService.todoSignal;
+  //todos$: Observable<Todo[]> = this.todoService.todos$;
+  todos: Signal<Todo[]> = this.todoService.todos;
   newTodo: string = '';
 
   ngOnInit(): void {
