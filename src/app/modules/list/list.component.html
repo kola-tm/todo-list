@@ -1,0 +1,26 @@
+<div class="grid justify-center p-3">
+    <mat-card class="w-80 rounded-lg mat-card">
+        <mat-card-content>
+                <div class=" p-3 m-3 grid justify-center">
+                    <h2 class="text-center">Welcome To Kola's To do App</h2>
+                
+                        <mat-form-field appearance="outline">
+                            <input (keydown.Enter)="addTodo()" [(ngModel)]="newTodo" matInput >
+                            <button *ngIf="newTodo !== ''" matSuffix mat-icon-button (click)="newTodo=''">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>  
+                    <div class="w-72 flex justify-between items-center" *ngFor="let item of todoSignal()">
+                        <mat-checkbox color="primary" [(ngModel)]="item.isDone"></mat-checkbox>
+                        <span class="p-2" [class.line-through]="item.isDone">
+                            {{ item.text  }}
+                        </span>
+
+                        <button mat-icon-button color="primary" class="flex justify-center" (click)="deleteTodo(item.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+        </mat-card-content>
+    </mat-card>
+</div>
