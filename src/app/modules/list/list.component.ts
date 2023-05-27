@@ -23,6 +23,10 @@ export class ListComponent implements OnInit {
     this.newTodo = '';
   }
 
+  updateTodo(todo: Todo): void {
+    this.todoService.updateTodo(todo.id, todo);
+  }
+
   deleteTodo(id: string):void {
     this.todoService.deleteTodo(id);
   }

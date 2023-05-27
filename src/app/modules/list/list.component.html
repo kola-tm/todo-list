@@ -11,7 +11,7 @@
                             </button>
                         </mat-form-field>  
                     <div class="w-72 flex justify-between items-center" *ngFor="let item of todos()">
-                        <mat-checkbox color="primary" [(ngModel)]="item.isDone"></mat-checkbox>
+                        <mat-checkbox color="primary" (click)="updateTodo(item)" [(ngModel)]="item.isDone"></mat-checkbox>
                         <span class="p-2" [class.line-through]="item.isDone">
                             {{ item.text  }}
                         </span>
