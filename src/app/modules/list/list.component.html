@@ -1,24 +1,39 @@
 <div class="grid justify-center p-3">
-    <mat-card class="w-80 rounded-lg mat-card">
+    <mat-card class="w-96 rounded-lg mat-card">
         <mat-card-content>
                 <div class=" p-3 m-3 grid justify-center">
                     <h2 class="text-center">Welcome To Kola's To do App</h2>
                 
-                        <mat-form-field appearance="outline">
-                            <input (keydown.Enter)="addTodo()" [(ngModel)]="newTodo" matInput >
-                            <button *ngIf="newTodo !== ''" matSuffix mat-icon-button (click)="newTodo=''">
-                                <mat-icon>close</mat-icon>
+                    <mat-form-field class="w-72 justify-self-center" appearance="outline">
+                        <input (keydown.Enter)="addTodo()" [(ngModel)]="newTodo" matInput >
+                        <button *ngIf="newTodo !== ''" matSuffix mat-icon-button (click)="newTodo=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>  
+                    <div class="w-96 flex justify-between items-center" *ngFor="let item of todos(); let i = index">
+                        <div class="flex">
+                            <mat-checkbox class="items-center" [disabled]="item.editMode" color="primary" (click)="updateTodo(item)" [(ngModel)]="item.isDone"></mat-checkbox>
+                            <button [disabled]="item.isDone" mat-icon-button color="primary" class="flex justify-center" (click)="toggleEditTodo(item)">
+                                <mat-icon>edit</mat-icon>
                             </button>
-                        </mat-form-field>  
-                    <div class="w-72 flex justify-between items-center" *ngFor="let item of todos()">
-                        <mat-checkbox color="primary" (click)="updateTodo(item)" [(ngModel)]="item.isDone"></mat-checkbox>
-                        <span class="p-2" [class.line-through]="item.isDone">
+                        </div>
+                        
+                        <span *ngIf="!item.editMode; else editTodoInput" class="p-2" [class.line-through]="item.isDone">
                             {{ item.text  }}
                         </span>
-
-                        <button mat-icon-button color="primary" class="flex justify-center" (click)="deleteTodo(item.id)">
+                        <ng-template #editTodoInput>
+                            <mat-form-field appearance="outline">
+                                <input [(ngModel)]="item.text" matInput >
+                                <button *ngIf="item.editMode" matSuffix [disabled]="editTodo === '' || editTodo === item.text" mat-icon-button color="primary" class="flex justify-center" (click)="updateTodo(item)">
+                                    <mat-icon>done</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </ng-template>
+                            
+                        <button [disabled]="item.editMode" mat-icon-button color="primary" class="flex justify-center" (click)="deleteTodo(item.id)">
                             <mat-icon>delete</mat-icon>
                         </button>
+
                     </div>
                 </div>
         </mat-card-content>

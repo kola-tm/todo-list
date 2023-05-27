@@ -12,7 +12,9 @@ export class ListComponent implements OnInit {
   todoService = inject(TodosService);
   //todos$: Observable<Todo[]> = this.todoService.todos$;
   todos: Signal<Todo[]> = this.todoService.todos;
+  editMode: boolean = false;
   newTodo: string = '';
+  editTodo: string = '';
 
   ngOnInit(): void {
       this.todoService.ngOnInit();
@@ -23,7 +25,16 @@ export class ListComponent implements OnInit {
     this.newTodo = '';
   }
 
+  toggleEditTodo(todo: Todo){
+    todo.editMode = !todo.editMode;
+    this.editTodo = todo.text.slice();
+    if (!todo.editMode)
+      this.editTodo = '';
+  }
+
   updateTodo(todo: Todo): void {
+    todo.editMode = false;
+    this.editTodo = '';
     this.todoService.updateTodo(todo.id, todo);
   }
 
